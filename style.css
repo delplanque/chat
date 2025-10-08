@@ -1,0 +1,121 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: black;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+#machine {
+  margin: 50px auto;
+  width: 500px;
+  height: 500px;
+  border: 6px solid #666;
+  border-radius: 15px;
+background: #f8f8f8;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+#clawZone {
+  position: absolute;
+  top: 0;
+  left: 230px;
+  transition: left 0.3s;
+  z-index: 10;
+}
+
+#rope {
+  width: 6px;
+  height: 150px;
+  background: #ccc;
+  margin: 0 auto;
+}
+
+#claw {
+  position: relative;
+  width: 60px;
+  height: 50px;
+  margin: 0 auto;
+}
+
+.arm {
+  width: 15px;
+  height: 50px;
+  background: silver;
+  position: absolute;
+  top: 0;
+}
+
+.arm.left {
+  left: 0;
+  transform: rotate(30deg);
+  transform-origin: top left;
+}
+
+.arm.right {
+  right: 0;
+  transform: rotate(-30deg);
+  transform-origin: top right;
+}
+
+#toys {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  z-index: 5;
+}
+
+.toy {
+  width: 60px;
+  height: 60px;
+  background: transparent;
+  display: block;
+}
+
+#playBtn, #secretBtn {
+  padding: 15px 30px;
+  font-size: 20px;
+  margin: 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #ffcc00;
+  box-shadow: 2px 2px 10px rgba(255,255,0,0.6);
+}
+
+#secretBtn {
+  display: none;
+  background: #4CAF50;
+  color: white;
+}
+
+#explosionArea {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 20;
+}
+
+.explosion {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(circle, red, orange, yellow);
+  animation: explodeAnim 1s forwards;
+}
+
+@keyframes explodeAnim {
+  0% { transform: scale(0.5); opacity: 1; }
+  50% { transform: scale(2); opacity: 0.8; }
+  100% { transform: scale(3); opacity: 0; }
+}
