@@ -45,7 +45,7 @@ playBtn.addEventListener("click", () => {
 });
 
 secretBtn.addEventListener("click", () => {
-  window.location.href = "aled.html";
+  window.location.href = "next.html";
 });
 
 function createExplosion() {

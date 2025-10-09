@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Petit cœur animé avec mot de passe</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ffdee9, #c13ed4);
+  }
+
+  /* Écran caché/visible */
+  .screen {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .screen.active {
+    display: flex;
+  }
+
+  /* Formulaire cute */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: white;
+    padding: 30px;
+    border-radius: 25px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  }
+  input[type="password"] {
+    padding: 10px 15px;
+    border-radius: 15px;
+    border: 2px solid #ff6b81;
+    outline: none;
+    font-size: 16px;
+  }
+  button {
+    padding: 10px 15px;
+    border-radius: 15px;
+    border: none;
+    background: #ff6b81;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .hint {
+    color: #ff6b81;
+    font-size: 14px;
+  }
+
+  /* Coeur cartoon */
+  .heart {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Image du cœur */
+  #heartImage {
+    width: 100%;
+    height: 100%;
+    animation: heartbeat 1s infinite;
+  }
+
+  /* Bulle de dialogue */
+  .bubble {
+    position: absolute;
+    top: -120px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s;
+    font-size: 14px;
+  }
+  .bubble.show { opacity: 1; }
+  .bubble::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 10px;
+    border-style: solid;
+    border-color: white transparent transparent transparent;
+  }
+
+  /* Bouton final caché */
+  #finalButton {
+    margin-top: 20px;
+    padding: 12px 20px;
+    font-size: 18px;
+    background: #6a0dad;
+    border-radius: 20px;
+    color: white;
+    border: none;
+    display: none; /* caché par défaut */
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<div class="screen active" id="screen1">
+  <h2>Trouve le mot de passe</h2>
+  <form id="passwordForm">
+    <input type="password" id="passwordInput" placeholder="Mot de passe">
+    <button type="submit">Entrer</button>
+    <div class="hint" id="hint"></div>
+  </form>
+</div>
+
+<div class="screen" id="screen2">
+  <div class="heart" id="heart">
+    <img src="boy1.png" alt="Cœur animé" id="heartImage">
+    <div class="bubble" id="bubble"></div>
+  </div>
+  <button id="finalButton">Clique 💜</button>
+</div>
+
+<script>
+  const passwordForm = document.getElementById("passwordForm");
+  const passwordInput = document.getElementById("passwordInput");
+  const hint = document.getElementById("hint");
+  const screen1 = document.getElementById("screen1");
+  const screen2 = document.getElementById("screen2");
+
+  const correctPassword = "toi";
+  const passwordHint = "Indice : ce qui compte le plus pour moi";
+
+  passwordForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if(passwordInput.value === correctPassword) {
+      screen1.classList.remove("active");
+      screen2.classList.add("active");
+    } else {
+      hint.textContent = passwordHint;
+      passwordInput.value = "";
+    }
+  });
+
+  const heart = document.getElementById("heart");
+  const bubble = document.getElementById("bubble");
+  const finalButton = document.getElementById("finalButton");
+
+  const messages = [
+    "Coucou petite supriseee,",
+    "Je pense que tu l'as compris mais",
+    "La personne avec qui je me sens bien c'est toi ❤",
+    "Tu es juste magnifique, pas seulement par ton sourire, ton regard ou ton corps",
+    "Mais aussi par la personne que tu es. Tout en toi me charme",
+    "que ce soit ta voix quand tu chantes, quand tu parles ou quand tu ris,",
+	"tout me touche j’aime absolument tout de toi ❤"
+  ];
+
+  let index = 0;
+  let musicElem = false;
+
+  heart.addEventListener("click", () => {
+    if (musicElem == false) {
+      const music = document.createElement("audio");
+      music.src = "you.mp3";
+      music.loop = true;
+      music.volume = 0.1;
+      music.autoplay = true;
+      music.hidden = true;
+      document.body.appendChild(music);
+      music.play().catch(() => console.log("Lecture bloquée"));
+      musicElem = true;
+    }
+
+    bubble.classList.add("show");
+    bubble.textContent = messages[index];
+
+    if (index === messages.length - 1) {
+      finalButton.style.display = "block";
+    }
+
+    index = (index + 1) % messages.length;
+  });
+
+  finalButton.addEventListener("click", () => {
+    window.location.href = "fa.html";
+  });
+</script>
+
+</body>
+</html>
